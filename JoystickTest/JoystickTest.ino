@@ -1,3 +1,10 @@
+#include <Wire.h> 
+#include "LiquidCrystal_I2C.h"
+
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+
 // Arduino pin numbers
 const int A = 3; // digital pin connected to switch output
 const int X = 0; // analog pin connected to X output
@@ -12,6 +19,15 @@ void setup() {
   pinMode(A, INPUT);
   digitalWrite(A, HIGH);
   Serial.begin(9600);
+
+  lcd.begin();
+  lcd.clear();
+  lcd.setCursor(0,0);
+  
+  lcd.print("Test");
+
+  lcd.setCursor(0,1);
+  lcd.print("Drive");
 }
 
 void loop() {
