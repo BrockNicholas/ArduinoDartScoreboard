@@ -51,6 +51,8 @@ void loop() {
 
   if (nw != -1){
     Serial.println(nw);
+    lcd.clear();
+    lcd.print(nw);
     old = nw;
   }
 
