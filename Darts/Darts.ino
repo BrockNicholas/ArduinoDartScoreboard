@@ -28,6 +28,8 @@ void setup() {
 
   lcd.setCursor(0,1);
   lcd.print("Drive");
+
+  lcd.clear();
 }
 
 void loop() {
@@ -39,9 +41,23 @@ void loop() {
   int yLoc = analogRead(Y);
   yLoc = map(yLoc, 0, 1026, 1, 11);
 
-byte v0[8] = {0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000};
-lcd.createChar(0, v0);
-lcd.write(v0[0]);
+  //lcd.clear();
+  
+
+  byte Check[] = {
+    B00000,
+    B00001,
+    B00011,
+    B10110,
+    B11100,
+    B01000,
+    B00000,
+    B00000
+  };
+
+  lcd.createChar(0, Check);
+  lcd.setCursor(0,1);
+  lcd.write(0);
 
 //  Serial.print(xLoc);
 //  Serial.print(", ");  
@@ -54,10 +70,10 @@ lcd.write(v0[0]);
 
   if (nw != -1){
     //Serial.println(nw);
-    lcd.clear();
-    lcd.setCursor(7,0);
-    lcd.print(nw);
-    old = nw;
+//    lcd.clear();
+//    lcd.setCursor(7,0);
+//    lcd.print(nw);
+//    old = nw;
   }
 
 }
