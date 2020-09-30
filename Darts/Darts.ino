@@ -1,4 +1,4 @@
-#include <Wire.h> 
+
 #include "LiquidCrystal_I2C.h"
 
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -39,11 +39,14 @@ void loop() {
   int yLoc = analogRead(Y);
   yLoc = map(yLoc, 0, 1026, 1, 11);
 
+byte v0[8] = {0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000};
+lcd.createChar(0, v0);
+lcd.write(v0[0]);
 
-  Serial.print(xLoc);
-  Serial.print(", ");  
-  Serial.print(yLoc);
-  Serial.println(" ");
+//  Serial.print(xLoc);
+//  Serial.print(", ");  
+//  Serial.print(yLoc);
+//  Serial.println(" ");
 
   nw = getPos(xLoc, yLoc);
 
@@ -52,6 +55,7 @@ void loop() {
   if (nw != -1){
     //Serial.println(nw);
     lcd.clear();
+    lcd.setCursor(7,0);
     lcd.print(nw);
     old = nw;
   }
