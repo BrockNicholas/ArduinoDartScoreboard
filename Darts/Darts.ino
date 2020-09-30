@@ -16,24 +16,18 @@ int old = -1;
 int nw = -1;
 
 void setup() {
-  pinMode(A, INPUT);
-  digitalWrite(A, HIGH);
+  pinMode(A, INPUT);  
   Serial.begin(9600);
 
   lcd.begin();
   lcd.clear();
   lcd.setCursor(0,0);
   
-  lcd.print("Test");
-
-  lcd.setCursor(0,1);
-  lcd.print("Drive");
-
-  lcd.clear();
+  
 }
 
 void loop() {
-  //getVals();
+  getVals();
 
   int xLoc = analogRead(X);
   xLoc = map(xLoc, 0, 1026, 1, 11);
@@ -41,39 +35,22 @@ void loop() {
   int yLoc = analogRead(Y);
   yLoc = map(yLoc, 0, 1026, 1, 11);
 
-  //lcd.clear();
-  
 
-  byte Check[] = {
-    B00000,
-    B00001,
-    B00011,
-    B10110,
-    B11100,
-    B01000,
-    B00000,
-    B00000
-  };
-
-  lcd.createChar(0, Check);
-  lcd.setCursor(0,1);
-  lcd.write(0);
-
-//  Serial.print(xLoc);
-//  Serial.print(", ");  
-//  Serial.print(yLoc);
-//  Serial.println(" ");
+  Serial.print(xLoc);
+  Serial.print(", ");  
+  Serial.print(yLoc);
+  Serial.println(" ");
 
   nw = getPos(xLoc, yLoc);
 
   //Serial.println(nw);
 
   if (nw != -1){
-    //Serial.println(nw);
-//    lcd.clear();
-//    lcd.setCursor(7,0);
-//    lcd.print(nw);
-//    old = nw;
+    Serial.println(nw);
+    lcd.clear();
+    lcd.setCursor(7,0);
+    lcd.print(nw);
+    old = nw;
   }
 
 }
@@ -157,7 +134,7 @@ int getPos(int xLoc, int yLoc){
   if (xLoc == 7 && yLoc == 1){
     x = 17;
   }
-  if (xLoc == 5 && yLoc == 1){
+  if (xLoc == 6 && yLoc == 1){
     x = 3;
   }
   if (xLoc == 3 && yLoc == 1){
