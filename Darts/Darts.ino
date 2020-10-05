@@ -17,34 +17,29 @@ int nw = -1;
 Eval e;
 
 void setup() {
-  pinMode(A, INPUT);  
+  pinMode(A, INPUT);
+  digitalWrite(A, HIGH);  
   Serial.begin(9600);
 
   lcd.begin();
-  lcd.clear();
-  lcd.setCursor(0,0);
+  lcd.clear();  
     
 }
 
-void loop() {
-  getVals();
+void loop() {  
+
+  Serial.println(isButtonPressed());
 
   int xLoc = analogRead(X);
   xLoc = map(xLoc, 0, 1026, 1, 11);
 
   int yLoc = analogRead(Y);
   yLoc = map(yLoc, 0, 1026, 1, 11);
-
-
-  Serial.print(xLoc);
-  Serial.print(", ");  
-  Serial.print(yLoc);
-  Serial.println(" ");
+  
 
   nw = e.GetPos(xLoc, yLoc, old);  
 
-  if (nw != -1){
-    // Serial.println(nw);
+  if (nw != -1){    
     lcd.clear();
     lcd.setCursor(7,0);
     lcd.print(nw);
@@ -53,56 +48,8 @@ void loop() {
 
 }
 
-bool aValue(){
-  bool val = digitalRead(A);
-  if (val == 1){
-    aReset = 1;
-  }
-  else if (val == 0 && aReset == 1){
-    aReset = 0;
-    return 1;
-  }
-  
-  return 0;
-}
-
-int xValue(){
-  long val = analogRead(X);
-  if (val > 400 && val < 600){
-    xReset = 1;
-    return 0;
-  }
-  else if (val <= 400 && xReset == 1){
-    xReset = 0;
-    return -1;
-  }
-  else if (val >= 600 && xReset == 1){
-    xReset = 0;
-    return 1;
-  }
-  return 0;
-}
-
-int yValue(){
-  long val = analogRead(Y);
-  if (val > 400 && val < 600){
-    yReset = 1;
-    return 0;
-  }
-  else if (val <= 400 && yReset == 1){
-    yReset = 0;
-    return -1;
-  }
-  else if (val >= 600 && yReset == 1){
-    yReset = 0;
-    return 1;
-  }
-  return 0;
-}
-
-void getVals(){
-  if (aValue()){
-    Serial.println("A");
-  }
-  
+bool isButtonPressed(){
+  if (digitalRead(A) == 0)
+      return true;
+  return false;
 }
