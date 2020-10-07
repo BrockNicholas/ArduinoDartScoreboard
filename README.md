@@ -15,7 +15,6 @@ The Arduino pins can be remapped in `Darts/Config.cpp`
 * Press Button3 to select a X3 multiplier or inner bullseye (50 points)
 
 * The game will continue to calculate your score until somebody has won
-* Upon game over, a new game will begin
 
 
 
