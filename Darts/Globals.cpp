@@ -1,6 +1,5 @@
 #include "Globals.h"
 
-
 int Globals::GetPosition(int xLoc, int yLoc, int old) {
   int x = -1;
   if (xLoc == 6 && yLoc == 10){
