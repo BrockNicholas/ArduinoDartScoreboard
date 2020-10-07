@@ -61,7 +61,8 @@ Player PlayARound(Player player){
   JoystickPosition = 0;
 
   GetDartValue();
-  player.ScoreThisRound += JoystickPosition;
+  int mult = GetMultiplier();
+  player.ScoreThisRound += JoystickPosition * mult;
   
   return player;  
  
@@ -85,6 +86,7 @@ void NotifyGameOver(const char* txt){
   WaitForButton();
   WaitForButton();
   GameOver = true;
+  ResetGame();
 }
 
 void GetDartValue() {  
@@ -111,6 +113,28 @@ void GetDartValue() {
       JoystickPosition = newPos;
     }
   }
+
+}
+
+int GetMultiplier() {  
+  int mult, oldMult = 2;  
+  lcd.clear();
+  // PrintFooter();  
+  
+  while (!IsButtonPressed()){    
+    int xLoc = analogRead(c.XAxis);
+    mult = map(xLoc, 0, 1026, 1, 3);
+     
+  
+    if (mult != oldMult) {
+      lcd.clear();
+      lcd.setCursor(7, 0);
+      Print(mult);
+      // PrintFooter();
+      oldMult == mult;
+    }
+  }
+  return mult;
 
 }
 
@@ -174,4 +198,6 @@ bool IsButtonPressed(){
 void ResetGame(){
   Println("Dart");
   Print("Scoreboard"); 
+  p1.Score, p2.Score = 501;
+  
 }
