@@ -66,8 +66,15 @@ Player PlayARound(Player player){
   JoystickPosition = 0;
 
   GetDartValue();
-  
-  player.ScoreThisRound += JoystickPosition * WhichButtonPressed;
+
+  if (JoystickPosition == 0){    
+    if (WhichButtonPressed == 2) // Hit outer bullseye
+      player.ScoreThisRound += 25;
+    if (WhichButtonPressed == 3) // Hit inner bullseye
+      player.ScoreThisRound += 50;
+  }
+  else
+    player.ScoreThisRound += JoystickPosition * WhichButtonPressed;
   
   return player;  
  
