@@ -4,9 +4,7 @@
 class Player {
 
         
-    public:        
-
-        static int WhoseTurn;
+    public:                
         
         int ScoreThisRound = 0;
         int Score = 501;        

@@ -7,6 +7,7 @@ Globals g;
 Config c;
 Player p1;
 Player p2;
+int WhoseTurn = 1;
 bool GameOver = false;
 int JoystickPosition = 0;
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -17,48 +18,71 @@ void setup() {
   pinMode(c.AButton, INPUT);
   digitalWrite(c.AButton, HIGH);
   Serial.begin(9600);
-  lcd.begin();  
+  lcd.begin();    
   
   
   Println("Dart");
   Print("Scoreboard");
   
-  while (true){  // Main game loop
+  while (true){  // Main game loop --------------------------------------
     WaitForButton();
     lcd.clear();
     // Print("Points?");
 
     while (!GameOver){
-      PlayARound(p1);
-      PlayARound(p2);
+      WhoseTurn = 1;
+      p1 = PlayARound(p1);
+      WhoseTurn = 2;
+      p2 = PlayARound(p2);
       PrintScores();
+      WaitForButton();
+
+      if (p1.Score == 0 && p2.Score == 0){
+        Print("TIE GAME");       
+        GameOver = true;
+      }
+      else if (p1.Score == 0){
+        Print("P1 WINS");
+        GameOver = true;
+      }
+      else if (p2.Score == 0){
+        Print("P2 WINS");
+        GameOver = true;
+      }
     }
     lcd.clear();
-  }
+  } // -------------------------------------------------------------------
     
 }
 
-void PlayARound(Player player){  
+Player PlayARound(Player player){  
   player.ScoreThisRound = 0;
+  JoystickPosition = 0;
+
+  GetDartValue();
+  player.ScoreThisRound += JoystickPosition;
   
   GetDartValue();
-  player.ScoreThisRound = JoystickPosition;
+  player.ScoreThisRound += JoystickPosition;
+  
   GetDartValue();
-  player.ScoreThisRound = JoystickPosition;
-  GetDartValue();
-  player.ScoreThisRound = JoystickPosition;
+  player.ScoreThisRound += JoystickPosition;
+  
 
   if (player.Score - player.ScoreThisRound >= 0){
     player.SetScore();
   }
 
-
+  return player;
   
  
 }
 
 void GetDartValue() {  
   JoystickPosition = 0;
+  lcd.clear();
+  PrintFooter();  
+  
   while (!IsButtonPressed()){
     int newPos;
     int xLoc = analogRead(c.XAxis);
@@ -74,6 +98,7 @@ void GetDartValue() {
       lcd.clear();
       lcd.setCursor(7, 0);
       Print(newPos);
+      PrintFooter();
       JoystickPosition = newPos;
     }
   }
@@ -88,6 +113,17 @@ void PrintScores(){
   
   Print("Player 2: ");
   Println(p2.Score);
+}
+
+void PrintFooter(){
+  lcd.setCursor(0, 1);
+  lcd.print("P");
+  lcd.print(WhoseTurn);
+  lcd.setCursor(13, 1);
+  if (WhoseTurn == 1)
+    lcd.print(p1.Score - p1.ScoreThisRound);
+  else
+    lcd.print(p2.Score - p2.ScoreThisRound);
 }
 
 void Println(const char* txt){
