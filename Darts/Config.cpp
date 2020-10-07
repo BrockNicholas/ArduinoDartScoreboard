@@ -1,5 +1,5 @@
 #include "Config.h"
-#include "LiquidCrystal_I2C.h"
+
 
 // Arduino pin numbers
 const int Config::AButton = 3;
