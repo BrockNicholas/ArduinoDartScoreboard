@@ -2,7 +2,9 @@
 
 
 // Arduino pin numbers
-const int Config::AButton = 3;
+const int Config::Button1 = 3;
+const int Config::Button2 = 5;
+const int Config::Button3 = 10;
 const int Config::XAxis = 0;
 const int Config::YAxis = 2;
 

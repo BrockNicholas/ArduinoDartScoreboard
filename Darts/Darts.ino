@@ -10,13 +10,18 @@ Player p2;
 int WhoseTurn = 1;
 bool GameOver = false;
 int JoystickPosition = 0;
+int WhichButtonPressed;
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
 LiquidCrystal_I2C lcd(c.LCDAddress, c.LCDNumberOfColumns, c.LCDNumberOfRows);
 
 void setup() {
   
-  pinMode(c.AButton, INPUT);
-  digitalWrite(c.AButton, HIGH);
+  pinMode(c.Button1, INPUT);
+  digitalWrite(c.Button1, HIGH);
+  pinMode(c.Button2, INPUT);
+  digitalWrite(c.Button2, HIGH);
+  pinMode(c.Button3, INPUT);
+  digitalWrite(c.Button3, HIGH);
   Serial.begin(9600);
   lcd.begin();    
   
@@ -61,7 +66,8 @@ Player PlayARound(Player player){
   JoystickPosition = 0;
 
   GetDartValue();
-  player.ScoreThisRound += JoystickPosition;
+  
+  player.ScoreThisRound += JoystickPosition * WhichButtonPressed;
   
   return player;  
  
@@ -85,6 +91,7 @@ void NotifyGameOver(const char* txt){
   WaitForButton();
   WaitForButton();
   GameOver = true;
+  ResetGame();
 }
 
 void GetDartValue() {  
@@ -113,6 +120,7 @@ void GetDartValue() {
   }
 
 }
+
 
 void PrintScores(){
   lcd.clear();
@@ -164,14 +172,27 @@ void WaitForButton() {
 }
 
 bool IsButtonPressed(){
-  if (digitalRead(c.AButton) == 0){
-      delay(800); // To make sure control doesn't try to continue while button is still pressed
-      return true;
-    }
+  if (digitalRead(c.Button1) == 0){
+    WhichButtonPressed = 1;
+    delay(800); // To make sure control doesn't try to continue while button is still pressed
+    return true;
+  }
+  if (digitalRead(c.Button2) == 0){
+    WhichButtonPressed = 2;
+    delay(800); // To make sure control doesn't try to continue while button is still pressed
+    return true;
+  }
+  if (digitalRead(c.Button3) == 0){
+    WhichButtonPressed = 3;
+    delay(800); // To make sure control doesn't try to continue while button is still pressed
+    return true;
+  }
   return false;
 }
 
 void ResetGame(){
   Println("Dart");
   Print("Scoreboard"); 
+  p1.Score, p2.Score = 501;
+  
 }

@@ -4,7 +4,9 @@
 class Config {
 
     public:
-        static const int AButton;
+        static const int Button1;
+        static const int Button2;
+        static const int Button3;
         static const int XAxis;
         static const int YAxis;
 
