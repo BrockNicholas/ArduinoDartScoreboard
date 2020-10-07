@@ -26,3 +26,4 @@ The Arduino pins can be remapped in `Darts/Config.cpp`
 5. Jumper wires (Male-Male and Male-Female)
 6. Three two-pin buttons
 
+![alt text](https://github.com/BrockNicholas/ArduinoDartScoreboard/blob/master/DartPreview.jpg.jpg?raw=true)
