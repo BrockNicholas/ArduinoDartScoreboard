@@ -7,6 +7,6 @@ class Globals {
     
     
   public:    
-    static int GetPosition(int xLoc, int yLoc, int old);    
+    static int GetJoystickPosition(int xLoc, int yLoc, int old);    
     
 };

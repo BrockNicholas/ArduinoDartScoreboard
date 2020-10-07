@@ -7,8 +7,9 @@ class Player {
         int PriorScore = 501;
         int ScoreThisRound = 0;
         
-    public:
-        bool IsPlayerOne;
+    public:        
+
+        static int WhoseTurn;
         
         int Score = 501;        
         int ThrowNumber = 1;
