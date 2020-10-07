@@ -1,10 +1,6 @@
 #include "Globals.h"
 
 
-Globals::Globals() {
-  
-}
-
 int Globals::hold = 5;
 
 int Globals::GetPos(int xLoc, int yLoc, int old) {

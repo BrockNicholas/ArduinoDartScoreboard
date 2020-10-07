@@ -9,9 +9,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 const int A = 3; // digital pin connected to switch output
 const int X = 0; // analog pin connected to X output
 const int Y = 2; // analog pin connected to Y output
-bool aReset = 1;
-bool xReset = 1;
-bool yReset = 1;
+
 int old = -1;
 int nw = -1;
 Globals g;
