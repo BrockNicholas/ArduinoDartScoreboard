@@ -1,4 +1,4 @@
-#include "Eval.h"
+#include "Globals.h"
 #include "LiquidCrystal_I2C.h"
 
 // Set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -14,42 +14,42 @@ bool xReset = 1;
 bool yReset = 1;
 int old = -1;
 int nw = -1;
-Eval e;
+Globals g;
 
 void setup() {
   pinMode(A, INPUT);
-  digitalWrite(A, HIGH);  
+  digitalWrite(A, HIGH);
   Serial.begin(9600);
 
   lcd.begin();
-  lcd.clear();  
-    
+  lcd.clear();
+  
+  Serial.println("HOLD");
+  Serial.println(g.hold);
 }
 
 void loop() {  
-
-  Serial.println(isButtonPressed());
 
   int xLoc = analogRead(X);
   xLoc = map(xLoc, 0, 1026, 1, 11);
 
   int yLoc = analogRead(Y);
   yLoc = map(yLoc, 0, 1026, 1, 11);
-  
 
-  nw = e.GetPos(xLoc, yLoc, old);  
 
-  if (nw != -1){    
+  nw = g.GetPos(xLoc, yLoc, old);
+
+  if (nw != -1) {
     lcd.clear();
-    lcd.setCursor(7,0);
+    lcd.setCursor(7, 0);
     lcd.print(nw);
     old = nw;
   }
 
 }
 
-bool isButtonPressed(){
+bool isButtonPressed() {
   if (digitalRead(A) == 0)
-      return true;
+    return true;
   return false;
 }

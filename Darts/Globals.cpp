@@ -1,12 +1,13 @@
-#include "Eval.h"
+#include "Globals.h"
 
 
-Eval::Eval() {
-
+Globals::Globals() {
+  
 }
 
+int Globals::hold = 5;
 
-int Eval::GetPos(int xLoc, int yLoc, int old) {
+int Globals::GetPos(int xLoc, int yLoc, int old) {
   int x = -1;
   if (xLoc == 6 && yLoc == 10){
     x = 20;

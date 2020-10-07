@@ -1,13 +1,14 @@
 
 #include <Arduino.h>
 
-class Eval {
+class Globals {
   
   
     
     
   public:
-    Eval();
+    Globals();
     int GetPos(int xLoc, int yLoc, int old);
+    static int hold;
     
 };
