@@ -5,6 +5,19 @@ This was a hobby project I designed from scratch. It's a little controller and d
 
 The Arduino pins can be remapped in `Darts/Config.cpp`
 
+## Directions
+* Press any button to begin
+* Rotate joystick to simulate dartboard values, or 
+* Leave in the center for 0 points, outer bullseye, or inner bullseye
+
+* Press Button1 if you received no multiplier or missed the dartboard
+* Press Button2 to select a X2 multiplier or outer bullseye (25 points)
+* Press Button3 to select a X3 multiplier or inner bullseye (50 points)
+
+* The game will continue to calculate your score until somebody has won
+* Upon game over, a new game will begin
+
+
 
 ## Components Needed
 1. Arduino Uno
