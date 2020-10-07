@@ -20,62 +20,71 @@ void setup() {
   Serial.begin(9600);
   lcd.begin();    
   
-  
-  Println("Dart");
-  Print("Scoreboard");
+  ResetGame();   
   
   while (true){  // Main game loop --------------------------------------
+    GameOver = false;
     WaitForButton();
     lcd.clear();
     // Print("Points?");
 
     while (!GameOver){
+      p1.ScoreThisRound = 0;
+      p2.ScoreThisRound = 0;
+      
       WhoseTurn = 1;
       p1 = PlayARound(p1);
+      p1 = PlayARound(p1);
+      p1 = PlayARound(p1);
+      if (p1.Score - p1.ScoreThisRound >= 0){
+        p1.SetScore();
+      }
       WhoseTurn = 2;
       p2 = PlayARound(p2);
+      p2 = PlayARound(p2);
+      p2 = PlayARound(p2);
+      if (p2.Score - p2.ScoreThisRound >= 0){
+        p2.SetScore();
+      }
+      
       PrintScores();
       WaitForButton();
 
-      if (p1.Score == 0 && p2.Score == 0){
-        Print("TIE GAME");       
-        GameOver = true;
-      }
-      else if (p1.Score == 0){
-        Print("P1 WINS");
-        GameOver = true;
-      }
-      else if (p2.Score == 0){
-        Print("P2 WINS");
-        GameOver = true;
-      }
+      CheckIfGameOver();
     }
     lcd.clear();
   } // -------------------------------------------------------------------
     
 }
 
-Player PlayARound(Player player){  
-  player.ScoreThisRound = 0;
+Player PlayARound(Player player){    
   JoystickPosition = 0;
 
   GetDartValue();
   player.ScoreThisRound += JoystickPosition;
   
-  GetDartValue();
-  player.ScoreThisRound += JoystickPosition;
-  
-  GetDartValue();
-  player.ScoreThisRound += JoystickPosition;
-  
-
-  if (player.Score - player.ScoreThisRound >= 0){
-    player.SetScore();
-  }
-
-  return player;
-  
+  return player;  
  
+}
+
+void CheckIfGameOver(){
+      if (p1.Score == 0 && p2.Score == 0){
+        NotifyGameOver("TIE GAME");
+      }
+      else if (p1.Score == 0){
+        NotifyGameOver("P1 WINS");
+      }
+      else if (p2.Score == 0){
+        NotifyGameOver("P2 WINS");
+      }
+}
+
+void NotifyGameOver(const char* txt){
+  lcd.clear();
+  Print(txt);
+  WaitForButton();
+  WaitForButton();
+  GameOver = true;
 }
 
 void GetDartValue() {  
@@ -160,4 +169,9 @@ bool IsButtonPressed(){
       return true;
     }
   return false;
+}
+
+void ResetGame(){
+  Println("Dart");
+  Print("Scoreboard"); 
 }
