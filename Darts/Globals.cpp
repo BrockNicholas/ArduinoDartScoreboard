@@ -1,7 +1,7 @@
 #include "Globals.h"
 
 
-int Globals::GetPos(int xLoc, int yLoc, int old) {
+int Globals::GetPosition(int xLoc, int yLoc, int old) {
   int x = -1;
   if (xLoc == 6 && yLoc == 10){
     x = 20;

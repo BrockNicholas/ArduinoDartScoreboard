@@ -2,14 +2,13 @@
 #include "Config.h"
 #include "LiquidCrystal_I2C.h"
 
-// Set the LCD address to 0x27 for a 16 chars and 2 line display
-LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-
-int old = -1;
+int position = -1;
 int nw = -1;
 Globals g;
 Config c;
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(c.LCDAddress, c.LCDNumberOfColumns, c.LCDNumberOfRows);
 
 void setup() {
   pinMode(c.AButton, INPUT);
@@ -18,10 +17,26 @@ void setup() {
 
   lcd.begin();
   lcd.clear();
+
+  while (true){
+    lcd.print("Player 1: 501");
+  
+    while (!isButtonPressed()){
+      
+      
+    }
+    delay(800);
+    lcd.clear();
+    lcd.print("Points?");
+    while (!isButtonPressed()){
+      GetDartValue();
+    }
+    lcd.clear();
+  }
     
 }
 
-void loop() {  
+void GetDartValue() {  
 
   int xLoc = analogRead(c.XAxis);
   xLoc = map(xLoc, 0, 1026, 1, 11);
@@ -30,13 +45,13 @@ void loop() {
   yLoc = map(yLoc, 0, 1026, 1, 11);
 
 
-  nw = g.GetPos(xLoc, yLoc, old);
+  nw = g.GetPosition(xLoc, yLoc, position);
 
   if (nw != -1) {
     lcd.clear();
     lcd.setCursor(7, 0);
     lcd.print(nw);
-    old = nw;
+    position = nw;
   }
 
 }
